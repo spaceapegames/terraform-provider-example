@@ -119,6 +119,29 @@ func (s *service) PutItem(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (s *service) DeleteItem(w http.ResponseWriter, r *http.Request)  {
+	log.Println("DeleteItems")
+
+	vars := mux.Vars(r)
+	itemId := vars["id"]
+	if itemId == "" {
+		http.Error(w, "not found", http.StatusNotFound)
+		return
+	}
+	itemIdNum, err := strconv.Atoi(itemId)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("expected and integer as an ID, got %s", itemId), http.StatusBadRequest)
+		return
+	}
+
+	delete(s.items, itemIdNum)
+
+	_, err = fmt.Fprintf(w, "Deleted id with id %s", itemId)
+	if err != nil {
+		log.Println(err)
+	}
+}
+
 func (s *service) GetItem(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	itemId := vars["id"]
