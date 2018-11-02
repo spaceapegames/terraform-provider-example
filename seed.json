@@ -1,0 +1,32 @@
+{
+  "item1": {
+    "name":"item1",
+    "description":"I'm item number 1",
+    "tags": [
+      "t1",
+      "t2",
+      "t3",
+      "t4"
+    ]
+  },
+  "item2": {
+    "name":"item2",
+    "description":"I'm item number 2",
+    "tags": [
+      "t1",
+      "t2",
+      "t3",
+      "t4"
+    ]
+  },
+  "item3": {
+    "name":"item3",
+    "description":"I'm item number 3",
+    "tags": [
+      "t1",
+      "t2",
+      "t3",
+      "t4"
+    ]
+  }
+}
