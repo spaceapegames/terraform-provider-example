@@ -26,8 +26,7 @@ func resourceItem() *schema.Resource {
 				Type: schema.TypeSet,
 				Optional: true,
 				Description: "An optional list of tags, represented as a key, value pair",
-				Elem: schema.TypeString,
-
+				Elem: &schema.Schema{Type: schema.TypeString},
 			},
 		},
 		Create:             resourceCreateItem,
@@ -46,8 +45,8 @@ func resourceCreateItem(d *schema.ResourceData, m interface{}) error  {
 
 	tfTags := d.Get("tags").(*schema.Set).List()
 	tags := make([]string, len(tfTags))
-	for _, tfTag := range tfTags {
-		tags = append(tags, tfTag.(string))
+	for i, tfTag := range tfTags {
+		tags[i] = tfTag.(string)
 	}
 
 	item := server.Item{

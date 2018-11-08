@@ -33,9 +33,9 @@ func Provider() terraform.ResourceProvider {
 }
 
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
-	address := d.Get("SERVICE_ADDRESS").(string)
-	port := d.Get("SERVICE_ADDRESS").(int)
-	token := d.Get("SERVICE_TOKEN").(string)
+	address := d.Get("address").(string)
+	port := d.Get("port").(int)
+	token := d.Get("token").(string)
 	return client.NewClient(address, port, token), nil
 
 }
