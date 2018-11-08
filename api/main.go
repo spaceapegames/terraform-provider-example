@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"github.com/spaceapegames/terraform-provider-blog/api/server"
+	"github.com/spaceapegames/terraform-provider-example/api/server"
 	"io/ioutil"
 	"log"
 )
@@ -28,7 +28,7 @@ func main() {
 
 	itemService := server.NewService("localhost:3001", items)
 	err := itemService.ListenAndServe()
-	if err !=  nil {
+	if err != nil {
 		log.Fatal(err)
 	}
 }

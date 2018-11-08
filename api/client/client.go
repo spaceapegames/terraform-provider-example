@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/spaceapegames/terraform-provider-blog/api/server"
+	"github.com/spaceapegames/terraform-provider-example/api/server"
 	"io"
 	"net/http"
 )
 
+// Client holds all of the information required to connect to a server
 type Client struct {
 	hostname   string
 	port       int
@@ -16,6 +17,9 @@ type Client struct {
 	httpClient *http.Client
 }
 
+// NewClient returns a new client configured to communicate on a server with the
+// given hostname and port and to send an Authorization Header with the value of
+// token
 func NewClient(hostname string, port int, token string) *Client {
 	return &Client{
 		hostname:   hostname,
@@ -25,6 +29,7 @@ func NewClient(hostname string, port int, token string) *Client {
 	}
 }
 
+// GetAll Retrieves all of the Items from the server
 func (c *Client) GetAll() (*map[string]server.Item, error) {
 	body, err := c.httpRequest("item", "GET", bytes.Buffer{})
 	if err != nil {
@@ -38,19 +43,21 @@ func (c *Client) GetAll() (*map[string]server.Item, error) {
 	return &items, nil
 }
 
-func (c *Client) GetItem(itemId string) (*server.Item, error) {
-	body, err := c.httpRequest(fmt.Sprintf("item/%v", itemId), "GET", bytes.Buffer{})
-	if err !=  nil {
+// GetItem gets an item with a specific name from the server
+func (c *Client) GetItem(name string) (*server.Item, error) {
+	body, err := c.httpRequest(fmt.Sprintf("item/%v", name), "GET", bytes.Buffer{})
+	if err != nil {
 		return nil, err
 	}
 	item := &server.Item{}
 	err = json.NewDecoder(body).Decode(item)
-	if err !=  nil {
+	if err != nil {
 		return nil, err
 	}
 	return item, nil
 }
 
+// NewItem creates a new Item
 func (c *Client) NewItem(item *server.Item) error {
 	buf := bytes.Buffer{}
 	err := json.NewEncoder(&buf).Encode(item)
@@ -64,6 +71,7 @@ func (c *Client) NewItem(item *server.Item) error {
 	return nil
 }
 
+// UpdateItem updates the values of an item
 func (c *Client) UpdateItem(item *server.Item) error {
 	buf := bytes.Buffer{}
 	err := json.NewEncoder(&buf).Encode(item)
@@ -77,7 +85,8 @@ func (c *Client) UpdateItem(item *server.Item) error {
 	return nil
 }
 
-func (c *Client) DeleteItem(itemName string) error  {
+// DeleteItem removes an item from the server
+func (c *Client) DeleteItem(itemName string) error {
 	_, err := c.httpRequest(fmt.Sprintf("item/%s", itemName), "DELETE", bytes.Buffer{})
 	if err != nil {
 		return err

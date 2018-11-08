@@ -10,19 +10,15 @@ import (
 	"regexp"
 )
 
+// Item represents a single Item
 type Item struct {
 	Name        string   `json:"name"`
 	Description string   `json:"description"`
 	Tags        []string `json:"tags"`
 }
 
-type Tag struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
-}
-
+// GetItems returns all of the Items that exist in the server
 func (s *Service) GetItems(w http.ResponseWriter, r *http.Request) {
-	log.Println("GetItems")
 	s.RLock()
 	defer s.RUnlock()
 	s.shuffleItemTags()
@@ -32,8 +28,8 @@ func (s *Service) GetItems(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// PostItem handles adding a new Item
 func (s *Service) PostItem(w http.ResponseWriter, r *http.Request) {
-	log.Println("PostItems")
 	var item Item
 	if r.Body == nil {
 		http.Error(w, "Please send a request body", http.StatusBadRequest)
@@ -67,9 +63,8 @@ func (s *Service) PostItem(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// PutItem handles updating an Item with a specific name
 func (s *Service) PutItem(w http.ResponseWriter, r *http.Request) {
-	log.Println("PutItems")
-
 	vars := mux.Vars(r)
 	itemName := vars["name"]
 	if itemName == "" {
@@ -105,9 +100,8 @@ func (s *Service) PutItem(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// DeleteItem handles removing an Item with a specific name
 func (s *Service) DeleteItem(w http.ResponseWriter, r *http.Request) {
-	log.Println("DeleteItems")
-
 	vars := mux.Vars(r)
 	itemName := vars["name"]
 	if itemName == "" {
@@ -130,6 +124,7 @@ func (s *Service) DeleteItem(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// GetItem handles retrieving an Item with a specific name
 func (s *Service) GetItem(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	itemName := vars["name"]

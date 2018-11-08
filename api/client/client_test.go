@@ -3,7 +3,7 @@ package client
 import (
 	"fmt"
 	"github.com/phayes/freeport"
-	"github.com/spaceapegames/terraform-provider-blog/api/server"
+	"github.com/spaceapegames/terraform-provider-example/api/server"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -195,7 +195,7 @@ func TestClient_NewItem(t *testing.T) {
 				Description: "describe me 1",
 				Tags:        nil,
 			},
-			seedData: nil,
+			seedData:  nil,
 			expectErr: true,
 		},
 	}
@@ -224,10 +224,10 @@ func TestClient_NewItem(t *testing.T) {
 
 func TestClient_UpdateItem(t *testing.T) {
 	testCases := []struct {
-		testName  string
-		updatedItem   *server.Item
-		seedData  map[string]server.Item
-		expectErr bool
+		testName    string
+		updatedItem *server.Item
+		seedData    map[string]server.Item
+		expectErr   bool
 	}{
 		{
 			testName: "item exists",
@@ -252,7 +252,7 @@ func TestClient_UpdateItem(t *testing.T) {
 				Description: "describe me 1",
 				Tags:        nil,
 			},
-			seedData: nil,
+			seedData:  nil,
 			expectErr: true,
 		},
 	}
@@ -282,7 +282,7 @@ func TestClient_UpdateItem(t *testing.T) {
 func TestClient_DeleteItem(t *testing.T) {
 	testCases := []struct {
 		testName  string
-		itemName   string
+		itemName  string
 		seedData  map[string]server.Item
 		expectErr bool
 	}{
@@ -299,9 +299,9 @@ func TestClient_DeleteItem(t *testing.T) {
 			expectErr: false,
 		},
 		{
-			testName: "item does not exist",
-			itemName: "item1",
-			seedData: nil,
+			testName:  "item does not exist",
+			itemName:  "item1",
+			seedData:  nil,
 			expectErr: true,
 		},
 	}

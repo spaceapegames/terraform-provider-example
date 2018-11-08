@@ -3,7 +3,7 @@ package provider
 import (
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
-	"github.com/spaceapegames/terraform-provider-blog/api/client"
+	"github.com/spaceapegames/terraform-provider-example/api/client"
 )
 
 func Provider() terraform.ResourceProvider {
