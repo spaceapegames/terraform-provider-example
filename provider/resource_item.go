@@ -90,7 +90,7 @@ func resourceReadItem(d *schema.ResourceData, m interface{}) error {
 	itemId := d.Id()
 	item, err := apiClient.GetItem(itemId)
 	if err != nil {
-		if strings.Contains(err.Error(), "404") {
+		if strings.Contains(err.Error(), "not found") {
 			d.SetId("")
 		} else {
 			return fmt.Errorf("error finding Item with ID %s", itemId)
@@ -135,6 +135,7 @@ func resourceDeleteItem(d *schema.ResourceData, m interface{}) error {
 	if err != nil {
 		return err
 	}
+	d.SetId("")
 	return nil
 }
 
@@ -144,12 +145,11 @@ func resourceExistsItem(d *schema.ResourceData, m interface{}) (bool, error) {
 	itemId := d.Id()
 	_, err := apiClient.GetItem(itemId)
 	if err != nil {
-		if strings.Contains(err.Error(), "404") {
+		if strings.Contains(err.Error(), "not found") {
 			return false, nil
 		} else {
 			return false, err
 		}
 	}
-
 	return true, nil
 }

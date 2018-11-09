@@ -23,10 +23,6 @@ func TestProvider(t *testing.T) {
 	}
 }
 
-func TestProvider_impl(t *testing.T) {
-	var _ = Provider()
-}
-
 func testAccPreCheck(t *testing.T) {
 	if v := os.Getenv("SERVICE_ADDRESS"); v == "" {
 		t.Fatal("SERVICE_ADDRESS must be set for acceptance tests")

@@ -33,6 +33,44 @@ func TestAccItem_Basic(t *testing.T) {
 	})
 }
 
+func TestAccItem_Update(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckItemDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccCheckItemUpdatePre(),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckWavefrontAlertExists("example_item.test_item"),
+					resource.TestCheckResourceAttr(
+						"example_item.test_item", "name", "test"),
+					resource.TestCheckResourceAttr(
+						"example_item.test_item", "description", "hello"),
+					resource.TestCheckResourceAttr(
+						"example_item.test_item", "tags.#", "2"),
+					resource.TestCheckResourceAttr("example_item.test_item", "tags.1931743815", "tag1"),
+					resource.TestCheckResourceAttr("example_item.test_item", "tags.1477001604", "tag2"),
+				),
+			},
+			{
+				Config: testAccCheckItemUpdatePost(),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckWavefrontAlertExists("example_item.test_item"),
+					resource.TestCheckResourceAttr(
+						"example_item.test_item", "name", "test"),
+					resource.TestCheckResourceAttr(
+						"example_item.test_item", "description", "update description"),
+					resource.TestCheckResourceAttr(
+						"example_item.test_item", "tags.#", "2"),
+					resource.TestCheckResourceAttr("example_item.test_item", "tags.1931743815", "tag1"),
+					resource.TestCheckResourceAttr("example_item.test_item", "tags.1477001604", "tag2"),
+				),
+			},
+		},
+	})
+}
+
 func TestAccItem_Multiple(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
@@ -110,6 +148,34 @@ func testAccCheckItemBasic() string {
 resource "example_item" "test_item" {
   name        = "test"
   description = "hello"
+  
+  tags = [
+	"tag1",
+    "tag2",
+  ]
+}
+`)
+}
+
+func testAccCheckItemUpdatePre() string {
+	return fmt.Sprintf(`
+resource "example_item" "test_update" {
+  name        = "test_update"
+  description = "hello"
+  
+  tags = [
+	"tag1",
+    "tag2",
+  ]
+}
+`)
+}
+
+func testAccCheckItemUpdatePost() string {
+	return fmt.Sprintf(`
+resource "example_item" "test_update" {
+  name        = "test_update"
+  description = "updated description"
   
   tags = [
 	"tag1",
