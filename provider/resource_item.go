@@ -109,8 +109,8 @@ func resourceUpdateItem(d *schema.ResourceData, m interface{}) error {
 
 	tfTags := d.Get("tags").(*schema.Set).List()
 	tags := make([]string, len(tfTags))
-	for _, tfTag := range tfTags {
-		tags = append(tags, tfTag.(string))
+	for i, tfTag := range tfTags {
+		tags[i] = tfTag.(string)
 	}
 
 	item := server.Item{

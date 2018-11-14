@@ -18,7 +18,7 @@ func TestAccItem_Basic(t *testing.T) {
 			{
 				Config: testAccCheckItemBasic(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckWavefrontAlertExists("example_item.test_item"),
+					testAccCheckExampleItemExists("example_item.test_item"),
 					resource.TestCheckResourceAttr(
 						"example_item.test_item", "name", "test"),
 					resource.TestCheckResourceAttr(
@@ -42,29 +42,29 @@ func TestAccItem_Update(t *testing.T) {
 			{
 				Config: testAccCheckItemUpdatePre(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckWavefrontAlertExists("example_item.test_item"),
+					testAccCheckExampleItemExists("example_item.test_update"),
 					resource.TestCheckResourceAttr(
-						"example_item.test_item", "name", "test"),
+						"example_item.test_update", "name", "test_update"),
 					resource.TestCheckResourceAttr(
-						"example_item.test_item", "description", "hello"),
+						"example_item.test_update", "description", "hello"),
 					resource.TestCheckResourceAttr(
-						"example_item.test_item", "tags.#", "2"),
-					resource.TestCheckResourceAttr("example_item.test_item", "tags.1931743815", "tag1"),
-					resource.TestCheckResourceAttr("example_item.test_item", "tags.1477001604", "tag2"),
+						"example_item.test_update", "tags.#", "2"),
+					resource.TestCheckResourceAttr("example_item.test_update", "tags.1931743815", "tag1"),
+					resource.TestCheckResourceAttr("example_item.test_update", "tags.1477001604", "tag2"),
 				),
 			},
 			{
 				Config: testAccCheckItemUpdatePost(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckWavefrontAlertExists("example_item.test_item"),
+					testAccCheckExampleItemExists("example_item.test_update"),
 					resource.TestCheckResourceAttr(
-						"example_item.test_item", "name", "test"),
+						"example_item.test_update", "name", "test_update"),
 					resource.TestCheckResourceAttr(
-						"example_item.test_item", "description", "update description"),
+						"example_item.test_update", "description", "updated description"),
 					resource.TestCheckResourceAttr(
-						"example_item.test_item", "tags.#", "2"),
-					resource.TestCheckResourceAttr("example_item.test_item", "tags.1931743815", "tag1"),
-					resource.TestCheckResourceAttr("example_item.test_item", "tags.1477001604", "tag2"),
+						"example_item.test_update", "tags.#", "2"),
+					resource.TestCheckResourceAttr("example_item.test_update", "tags.1931743815", "tag1"),
+					resource.TestCheckResourceAttr("example_item.test_update", "tags.1477001604", "tag2"),
 				),
 			},
 		},
@@ -80,8 +80,8 @@ func TestAccItem_Multiple(t *testing.T) {
 			{
 				Config: testAccCheckItemMultiple(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckWavefrontAlertExists("example_item.test_item"),
-					testAccCheckWavefrontAlertExists("example_item.another_item"),
+					testAccCheckExampleItemExists("example_item.test_item"),
+					testAccCheckExampleItemExists("example_item.another_item"),
 				),
 			},
 		},
@@ -124,7 +124,7 @@ func testAccCheckItemDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckWavefrontAlertExists(resource string) resource.TestCheckFunc {
+func testAccCheckExampleItemExists(resource string) resource.TestCheckFunc {
 	return func(state *terraform.State) error {
 		rs, ok := state.RootModule().Resources[resource]
 		if !ok {

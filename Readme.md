@@ -2,7 +2,7 @@
 
 Code to accompany the [Building a Terraform Provider](linkto/blogpost) blog.
 
-Consistes of several components
+Consists of several components
 
 *  A main.go which serves as the entry point to the provider
 *  A provider package which implments the provider and is consumed by main.go
