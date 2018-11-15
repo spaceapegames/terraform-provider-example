@@ -11,7 +11,6 @@ import (
 func main() {
 	seed := flag.String("seed", "", "a file location with some data in JSON form to seed the server content")
 	flag.Parse()
-	log.Println(*seed)
 
 	items := map[string]server.Item{}
 
