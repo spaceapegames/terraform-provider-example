@@ -6,7 +6,7 @@ Consists of several components
 
 *  A main.go which serves as the entry point to the provider
 *  A provider package which implments the provider and is consumed by main.go
-*  An api package which contains a main.go which is the entry point to the server. This would not usually live within the same repository as the provider code, it's just here so that all the code for this example lives with in a single repository
+*  An api package which contains of a main.go which is the entry point to the server. This would not usually live within the same repository as the provider code, it's just here so that all the code for this example lives with in a single repository
     *  The api consists of two packages:
         *  server, which is the implementation of the webserver
         *  client, which is a client that can be used to programatically interact with the server.
@@ -25,7 +25,7 @@ type Item struct {
 
 ### Routes
 
-All Items are stored in memeory in a `map[string]Item`, where the string is the name of the Item.
+All Items are stored in memeory in a `map[string]Item`, where the key is the name of the Item.
 
 The server has five routes:
 
@@ -37,7 +37,7 @@ The server has five routes:
 
 ### Starting the Server
 
-You can start the server by running `go run api/main.go` from the root of the repository. This will start the server on `localhost:3001`
+You can start the server by running `go run api/main.go` or `make startapi` from the root of the repository. This will start the server on `localhost:3001`
 
 You can optionally provide a file containing json to seed the server by providing a seed flag; `go run api/main.go -seed seed.json`
 
@@ -47,9 +47,9 @@ An non-empty `Authorization` header must be provided with all requests. The serv
 
 ## Client
 
-The client can be used to programatically interact with the Server and is what we will use in the provider.
+The client can be used to programatically interact with the Server and is what the provider will use.
 
-There is a `NewClient` function that will return a *Client. The function takes a hostname, port and token (The token can be anything that is not an empty string).
+There is a `NewClient` function that will return a `*Client`. The function takes a hostname, port and token (The token can be anything that is not an empty string).
 
 This will create a client for server with the default, hard-coded settings:
 
