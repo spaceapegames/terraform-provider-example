@@ -1,6 +1,6 @@
 # Building a Terraform Provider
 
-Code to accompany the [Building a Terraform Provider](linkto/blogpost) blog.
+Code to accompany the [Building a Terraform Provider](https://medium.com/spaceapetech/creating-a-terraform-provider-part-1-ed12884e06d7) blog.
 
 Consists of several components
 
