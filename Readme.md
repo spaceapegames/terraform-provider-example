@@ -11,6 +11,12 @@ Consists of several components
         *  server, which is the implementation of the webserver
         *  client, which is a client that can be used to programatically interact with the server.
 
+## Requirements
+
+* go => 1.11
+
+This project used Go Modules, so you will need to enable them using `export GO111MODULE=on`, otherwise your go commands (run, build and test) will fail.
+
 ## API
 
 The API is pretty simple, it just stores items which have a name, description and some tags, tags are a slice of strings. Name serves as the id for the Item. 
